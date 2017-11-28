@@ -67,10 +67,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
     
     
-    xDMInstance->downloadCartooninfo("青年漫画");
+//    xDMInstance->downloadCartooninfo("青年漫画");
     
-    xCMInstance->readCategoryFromCsv();
-//    xCMInstance->readCartoonFromCsv();
+//    xCMInstance->readCategoryFromCsv();
+    xCMInstance->readCartoonFromCsv();
 
     director->runWithScene(CartoonScene::create());
 

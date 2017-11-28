@@ -8,6 +8,7 @@
 
 #include "CategoryManager.hpp"
 #include "CSVParse.h"
+#include "DownloadManager.hpp"
 
 static CategoryManager* _instance = nullptr;
 
@@ -61,10 +62,19 @@ void CategoryManager::readCartoonFromCsv()
             cartoon.area = lCsv->getDatas(i, "area");
             cartoon.des = lCsv->getDatas(i, "des");
             cartoon.coverUrl = lCsv->getDatas(i, "coverUrl");
-            cartoon.isfinish = lCsv->getDatas(i, "isfinsh");;
+            cartoon.isfinish = lCsv->getDatas(i, "isfinsh");
+            cartoon.folder = lCsv->getDatas(i, "folder");
             
             _CartoonInfo.push_back(cartoon);
         }
+    }
+    
+    
+    for (int i = 0; i <1; ++i)
+    {
+        Cartoon cartoon = _CartoonInfo.at(i);
+        
+        xDMInstance->downloadCover(cartoon.folder, cartoon.coverUrl);
     }
 }
 

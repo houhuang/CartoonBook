@@ -27,6 +27,12 @@ public:
     
 public:
     void downloadCartooninfo(string categoryName);
+    void downloadChapter();
+    
+    void downloadCover(string folder, string url);
+    
+//private:
+    bool createDirectory(const char *path);
     
 };
 

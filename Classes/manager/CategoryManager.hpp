@@ -12,7 +12,6 @@
 #include <stdio.h>
 USING_NS_CC;
 
-#define url_header "http://japi.juhe.cn/comic/book?"
 #define xCMInstance CategoryManager::getInstance()
 
 using namespace std;
@@ -26,6 +25,7 @@ public:
     string des;
     string coverUrl;
     string isfinish;
+    string folder;
 };
 
 class Category
