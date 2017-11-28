@@ -11,6 +11,14 @@
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		27709CBD1FCCF9DB004A3D38 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 27709CBC1FCCF9DB004A3D38 /* data */; };
+		27709CC21FCCFE31004A3D38 /* STVisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CC01FCCFE31004A3D38 /* STVisibleRect.cpp */; };
+		27709CC61FCCFF8E004A3D38 /* CategoryManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CC41FCCFF8E004A3D38 /* CategoryManager.cpp */; };
+		27709CC91FCD00C5004A3D38 /* CSVParse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CC71FCD00C5004A3D38 /* CSVParse.cpp */; };
+		27709CCC1FCD0822004A3D38 /* UrlEncodeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CCA1FCD0822004A3D38 /* UrlEncodeHelper.cpp */; };
+		27709CCF1FCD0BF0004A3D38 /* DownloadManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CCD1FCD0BF0004A3D38 /* DownloadManager.cpp */; };
+		27709CD21FCD1529004A3D38 /* SearchPathManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CD01FCD1529004A3D38 /* SearchPathManager.cpp */; };
+		27709CD81FCD430A004A3D38 /* CartoonScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27709CD61FCD430A004A3D38 /* CartoonScene.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -108,6 +116,21 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* CartoonBook-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CartoonBook-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		27709CBC1FCCF9DB004A3D38 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		27709CC01FCCFE31004A3D38 /* STVisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STVisibleRect.cpp; sourceTree = "<group>"; };
+		27709CC11FCCFE31004A3D38 /* STVisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STVisibleRect.h; sourceTree = "<group>"; };
+		27709CC41FCCFF8E004A3D38 /* CategoryManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CategoryManager.cpp; sourceTree = "<group>"; };
+		27709CC51FCCFF8E004A3D38 /* CategoryManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CategoryManager.hpp; sourceTree = "<group>"; };
+		27709CC71FCD00C5004A3D38 /* CSVParse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParse.cpp; sourceTree = "<group>"; };
+		27709CC81FCD00C5004A3D38 /* CSVParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParse.h; sourceTree = "<group>"; };
+		27709CCA1FCD0822004A3D38 /* UrlEncodeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UrlEncodeHelper.cpp; sourceTree = "<group>"; };
+		27709CCB1FCD0822004A3D38 /* UrlEncodeHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UrlEncodeHelper.hpp; sourceTree = "<group>"; };
+		27709CCD1FCD0BF0004A3D38 /* DownloadManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DownloadManager.cpp; sourceTree = "<group>"; };
+		27709CCE1FCD0BF0004A3D38 /* DownloadManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DownloadManager.hpp; sourceTree = "<group>"; };
+		27709CD01FCD1529004A3D38 /* SearchPathManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchPathManager.cpp; sourceTree = "<group>"; };
+		27709CD11FCD1529004A3D38 /* SearchPathManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SearchPathManager.hpp; sourceTree = "<group>"; };
+		27709CD61FCD430A004A3D38 /* CartoonScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CartoonScene.cpp; sourceTree = "<group>"; };
+		27709CD71FCD430A004A3D38 /* CartoonScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CartoonScene.hpp; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
@@ -241,6 +264,41 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		27709CBF1FCCFE31004A3D38 /* helper */ = {
+			isa = PBXGroup;
+			children = (
+				27709CC71FCD00C5004A3D38 /* CSVParse.cpp */,
+				27709CC81FCD00C5004A3D38 /* CSVParse.h */,
+				27709CC01FCCFE31004A3D38 /* STVisibleRect.cpp */,
+				27709CC11FCCFE31004A3D38 /* STVisibleRect.h */,
+				27709CCA1FCD0822004A3D38 /* UrlEncodeHelper.cpp */,
+				27709CCB1FCD0822004A3D38 /* UrlEncodeHelper.hpp */,
+			);
+			path = helper;
+			sourceTree = "<group>";
+		};
+		27709CC31FCCFF67004A3D38 /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				27709CD01FCD1529004A3D38 /* SearchPathManager.cpp */,
+				27709CD11FCD1529004A3D38 /* SearchPathManager.hpp */,
+				27709CC41FCCFF8E004A3D38 /* CategoryManager.cpp */,
+				27709CC51FCCFF8E004A3D38 /* CategoryManager.hpp */,
+				27709CCD1FCD0BF0004A3D38 /* DownloadManager.cpp */,
+				27709CCE1FCD0BF0004A3D38 /* DownloadManager.hpp */,
+			);
+			path = manager;
+			sourceTree = "<group>";
+		};
+		27709CD51FCD42F3004A3D38 /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				27709CD61FCD430A004A3D38 /* CartoonScene.cpp */,
+				27709CD71FCD430A004A3D38 /* CartoonScene.hpp */,
+			);
+			path = scene;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +342,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				27709CBC1FCCF9DB004A3D38 /* data */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
@@ -297,6 +356,9 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				27709CD51FCD42F3004A3D38 /* scene */,
+				27709CC31FCCFF67004A3D38 /* manager */,
+				27709CBF1FCCFE31004A3D38 /* helper */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -470,6 +532,7 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
+				27709CBD1FCCF9DB004A3D38 /* data in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,11 +557,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27709CC61FCCFF8E004A3D38 /* CategoryManager.cpp in Sources */,
+				27709CD81FCD430A004A3D38 /* CartoonScene.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				27709CCC1FCD0822004A3D38 /* UrlEncodeHelper.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				27709CC91FCD00C5004A3D38 /* CSVParse.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				27709CCF1FCD0BF0004A3D38 /* DownloadManager.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				27709CD21FCD1529004A3D38 /* SearchPathManager.cpp in Sources */,
+				27709CC21FCCFE31004A3D38 /* STVisibleRect.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

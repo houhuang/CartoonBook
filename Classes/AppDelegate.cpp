@@ -1,5 +1,10 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "STVisibleRect.h"
+#include "CategoryManager.hpp"
+#include "DownloadManager.hpp"
+#include "SearchPathManager.hpp"
+#include "CartoonScene.hpp"
 
 USING_NS_CC;
 
@@ -47,38 +52,27 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
+    log("%s",FileUtils::getInstance()->getWritablePath().c_str());
+    
     // turn on display FPS
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-    // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-    Size frameSize = glview->getFrameSize();
-    // if the frame's height is larger than the height of medium size.
-    if (frameSize.height > mediumResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
-    }
-    // if the frame's height is larger than the height of small size.
-    else if (frameSize.height > smallResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
-    }
-    // if the frame's height is smaller than the height of medium size.
-    else
-    {        
-        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
-    }
+    SearchPathManager::getInstance()->updateSearchPath();
+    
+    STVisibleRect::setupVisibleRect(director->getOpenGLView()->getFrameSize(), Size(640, 1136));
 
     register_all_packages();
+    
+    
+    xDMInstance->downloadCartooninfo("青年漫画");
+    
+    xCMInstance->readCategoryFromCsv();
+//    xCMInstance->readCartoonFromCsv();
 
-    // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
-
-    // run
-    director->runWithScene(scene);
+    director->runWithScene(CartoonScene::create());
 
     return true;
 }
@@ -87,6 +81,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
 
+//    xCMInstance->saveCartoonInfoToCsv();
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
