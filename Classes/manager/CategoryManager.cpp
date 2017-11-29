@@ -70,11 +70,19 @@ void CategoryManager::readCartoonFromCsv()
     }
     
     
-    for (int i = 65; i <_CartoonInfo.size(); ++i)
+    for (int i = 0; i < _CartoonInfo.size(); ++i)
     {
         Cartoon cartoon = _CartoonInfo.at(i);
         
-        xDMInstance->downloadCover(cartoon.folder, cartoon.coverUrl);
+        
+        
+
+        const char* gg;
+        gg = cartoon.name.c_str();
+        string ss = xDMInstance->UrlGB2312(gg);
+        
+        xDMInstance->downloadChapter(ss, cartoon.folder);
+
     }
 }
 

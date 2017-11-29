@@ -27,13 +27,18 @@ public:
     
 public:
     void downloadCartooninfo(string categoryName);
-    void downloadChapter();
+    
+    void downloadChapter(string cartoonName, string folder);
     
     void downloadCover(string folder, string url);
     
 //private:
     bool createDirectory(const char *path);
     
+    string StrToHex(string strData);
+    string UrlGB2312(const char * str);
+    
+    void saveMyArtDataTofile(const vector<list<string>>& lCsvData, const string& fileName);
 };
 
 #endif /* DownloadManager_hpp */

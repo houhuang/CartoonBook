@@ -19,3 +19,5 @@ UrlEncodeHelper* UrlEncodeHelper::getInstance()
     
     return _instance;
 }
+
+
