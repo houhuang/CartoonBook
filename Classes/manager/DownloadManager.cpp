@@ -118,14 +118,14 @@ void DownloadManager::downloadChapter()
 
 void DownloadManager::downloadCover(string folder, string url)
 {
-    string ss = url;
-    string dd = ss.substr(4, ss.length());
-    string ff = "https" + dd;
-    
-    string gg = "http://imgs.juheapi.com/comic_xin/5L61xMn50vQ=/259394/15-MjU5Mzk0MTU=.jpg";
+   
+    if (url == "")
+    {
+        return;
+    }
     
     HttpRequest* lRequest = new HttpRequest();
-    lRequest->setUrl(gg.c_str());
+    lRequest->setUrl(url.c_str());
     lRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
     lRequest->setResponseCallback([this, lRequest](network::HttpClient* client, network::HttpResponse* response){
         

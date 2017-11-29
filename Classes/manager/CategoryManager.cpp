@@ -70,7 +70,7 @@ void CategoryManager::readCartoonFromCsv()
     }
     
     
-    for (int i = 0; i <1; ++i)
+    for (int i = 65; i <_CartoonInfo.size(); ++i)
     {
         Cartoon cartoon = _CartoonInfo.at(i);
         
