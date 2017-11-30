@@ -16,6 +16,21 @@ USING_NS_CC;
 
 using namespace std;
 
+class Picture
+{
+public:
+    string id;
+    string url;
+};
+
+class Chapter
+{
+public:
+    string name;
+    string id;
+    string floder;
+};
+
 class Cartoon
 {
 public:
@@ -26,6 +41,8 @@ public:
     string coverUrl;
     string isfinish;
     string folder;
+    
+    vector<Chapter> _chapterInfo;
 };
 
 class Category

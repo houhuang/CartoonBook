@@ -70,6 +70,27 @@ void CategoryManager::readCartoonFromCsv()
     }
     
     
+    //read chapter
+    for (int i = 0; i < _CartoonInfo.size(); ++i)
+    {
+        string path = FileUtils::getInstance()->getWritablePath() + _CartoonInfo.at(i).folder + "/chapter.csv";
+        if (FileUtils::getInstance()->isFileExist(path))
+        {
+            CSVParse* lCsv = CSVParse::create(path.c_str());
+            unsigned int row = lCsv->getRows();
+            for (int j = 1; j < row; ++j)
+            {
+                Chapter chapter;
+                chapter.name = lCsv->getDatas(j, "name");
+                chapter.id = lCsv->getDatas(j, "id");
+                chapter.floder = lCsv->getDatas(j, "folder");
+                
+                _CartoonInfo.at(i)._chapterInfo.push_back(chapter);
+            }
+        }
+    }
+    
+    
     for (int i = 0; i < _CartoonInfo.size(); ++i)
     {
         Cartoon cartoon = _CartoonInfo.at(i);
