@@ -16,7 +16,7 @@ bool CartoonScene::init()
     LayerColor* layer = LayerColor::create(Color4B::WHITE);
     this->addChild(layer);
     
-    xCMInstance->readCartoonFromCsv();
+//    xCMInstance->readCartoonFromCsv();
     
     this->createTable();
     return true;

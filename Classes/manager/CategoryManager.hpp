@@ -66,7 +66,7 @@ public:
 private:
     void saveMyArtDataTofile(const vector<list<string>>& lCsvData, const string& fileName);
     
-private:
+public:
     vector<Category> _CategoryInfo;
     vector<Cartoon> _CartoonInfo;
 

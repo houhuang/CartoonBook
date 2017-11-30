@@ -13,6 +13,7 @@
 #include "network/HttpRequest.h"
 #include "network/HttpClient.h"
 #include "cocos-ext.h"
+#include "CategoryManager.hpp"
 USING_NS_CC;
 
 #define xDMInstance DownloadManager::getInstance()
@@ -25,6 +26,8 @@ class DownloadManager
 public:
     static DownloadManager* getInstance();
     
+    DownloadManager();
+    
 public:
     void downloadCartooninfo(string categoryName);
     
@@ -34,6 +37,19 @@ public:
     
 //private:
     bool createDirectory(const char *path);
+    
+    //download picture csv
+    void downloadPictureCsv();
+    void startDownload(Chapter chapter, string cartoonName, string carttonFolder);
+    vector<Chapter> _needDownloadChapter;
+    
+    bool _downloadSwitch;
+    string saveFolder;
+    string _cartoonName;
+    
+    void saveToCsv();
+    vector<list<string>> vecPic;
+    
     
     string StrToHex(string strData);
     string UrlGB2312(const char * str);

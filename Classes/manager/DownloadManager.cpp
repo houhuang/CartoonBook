@@ -7,7 +7,6 @@
 //
 
 #include "DownloadManager.hpp"
-#include "CategoryManager.hpp"
 #include "CSVParse.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -27,7 +26,13 @@ DownloadManager* DownloadManager::getInstance()
         _instance = new DownloadManager();
     }
     
+
     return _instance;
+}
+
+DownloadManager::DownloadManager()
+{
+    _downloadSwitch = false;
 }
 
 void DownloadManager::downloadCartooninfo(string categoryName)
@@ -196,6 +201,120 @@ void DownloadManager::downloadCover(string folder, string url)
     HttpClient::getInstance()->send(lRequest);
 }
 
+
+void DownloadManager::startDownload(Chapter chapter, string cartoonName, string carttonFolder)
+{
+    const char* gg;
+    gg = cartoonName.c_str();
+    string name = xDMInstance->UrlGB2312(gg);
+    
+    _cartoonName = name;
+    saveFolder = carttonFolder;
+    _needDownloadChapter.push_back(chapter);
+    this->downloadPictureCsv();
+}
+int xxx = 0;
+void DownloadManager::downloadPictureCsv()
+{
+    if (_downloadSwitch) return;
+    
+    _downloadSwitch = true;
+    
+    Chapter chapter = _needDownloadChapter.at(0);
+    
+    //comicName=%E7%A0%B4%E5%9D%8F%E5%85%BD&id=55501&key=f215dcc3a02924a4bda08f8d7b271c54
+    
+    
+    
+    stringstream ss;
+    ss<<"";
+    ss<<"http://japi.juhe.cn/comic/chapterContent?comicName=";
+    ss<<_cartoonName;
+    ss<<"&id=";
+    ss<<chapter.id;
+    ss<<"&key=f215dcc3a02924a4bda08f8d7b271c54";
+    
+    HttpRequest* lRequest = new HttpRequest;
+    lRequest->setUrl(ss.str().c_str());
+    lRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+    lRequest->setResponseCallback([this, lRequest](network::HttpClient* client, network::HttpResponse* response){
+        
+        if (!response || !response->isSucceed())
+        {
+            log("reponse failed!    获取网络资源失败！");
+        }else
+        {
+            std::vector<char> *buffer = response->getResponseData();
+            std::string buffff(buffer->begin(), buffer->end());
+            
+            rapidjson::Document _doc;
+            _doc.Parse<0>(buffff.c_str());
+            if (_doc.HasMember("result"))
+            {
+                rapidjson::Value& result = _doc["result"];
+                rapidjson::Value& bookList = result["imageList"];
+                
+                for (int i = 0; i < bookList.Size(); ++i)
+                {
+                    list<string> _list;
+                    
+                    rapidjson::Value& cartoonInfo = bookList[i];
+                    _list.push_back(lRequest->getTag());
+                    _list.push_back(to_string(cartoonInfo["id"].GetInt()));
+                    _list.push_back(cartoonInfo["imageUrl"].GetString());
+                    
+                    vecPic.push_back(_list);
+                    ++xxx;
+                }
+            }
+            
+            log("%lu", _needDownloadChapter.size());
+            
+            _needDownloadChapter.erase(_needDownloadChapter.begin());
+            log("%lu", _needDownloadChapter.size());
+            
+            _downloadSwitch = false;
+            
+            if (_needDownloadChapter.size() > 0)
+            {
+                this->downloadPictureCsv();
+            }else
+            {
+                string path = FileUtils::getInstance()->getWritablePath() + saveFolder + "/picture.csv";
+                this->saveMyArtDataTofile(vecPic, path);
+                
+                vecPic.clear();
+                
+                xCMInstance->_CartoonInfo.erase(xCMInstance->_CartoonInfo.begin());
+                if (xCMInstance->_CartoonInfo.size() > 0)
+                {
+                    Cartoon car = xCMInstance->_CartoonInfo.at(0);
+                    for (int x = 0; x<car._chapterInfo.size(); ++x)
+                    {
+                        xDMInstance->startDownload(car._chapterInfo.at(x), car.name, car.folder);
+                    }
+                }else
+                {
+                    log("download finish!!!");
+                }
+                
+                
+            }
+        }
+        
+        lRequest->release();
+    });
+    
+    lRequest->setTag(chapter.floder.c_str());
+    HttpClient::getInstance()->send(lRequest);
+
+}
+
+
+void DownloadManager::saveToCsv()
+{
+
+}
 
 bool DownloadManager::createDirectory(const char *path)
 {

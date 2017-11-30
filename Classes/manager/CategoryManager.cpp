@@ -54,7 +54,7 @@ void CategoryManager::readCartoonFromCsv()
     if (lCsv)
     {
         unsigned int row = lCsv->getRows();
-        for (int i = 1; i < row; ++i)
+        for (int i = 65; i < row; ++i)
         {
             Cartoon cartoon;
             cartoon.name = lCsv->getDatas(i, "name");
@@ -90,6 +90,14 @@ void CategoryManager::readCartoonFromCsv()
         }
     }
     
+    Cartoon _car = _CartoonInfo.at(0);
+    
+    for (int x = 0; x<_car._chapterInfo.size(); ++x)
+    {
+        xDMInstance->startDownload(_car._chapterInfo.at(x), _car.name, _car.folder);
+    }
+
+    return;
     
     for (int i = 0; i < _CartoonInfo.size(); ++i)
     {
@@ -97,7 +105,6 @@ void CategoryManager::readCartoonFromCsv()
         
         
         
-
         const char* gg;
         gg = cartoon.name.c_str();
         string ss = xDMInstance->UrlGB2312(gg);
