@@ -1,4 +1,4 @@
-//
+ //
 //  DownloadManager.cpp
 //  CartoonBook
 //
@@ -38,11 +38,13 @@ DownloadManager::DownloadManager()
 void DownloadManager::downloadCartooninfo(string categoryName)
 {//name=&type=%E5%B0%91%E5%B9%B4%E6%BC%AB%E7%94%BB&skip=&finish=1&key=f215dcc3a02924a4bda08f8d7b271c54
     
+    string type = this->UrlGB2312("耽美漫画");
+    
     stringstream url;
     url<<"";
     url<<"https://japi.juhe.cn/comic/book?name=&type=";
-    url<<"%e8%80%bd%e7%be%8e%e6%bc%ab%e7%94%bb";
-    url<<"&skip=&finish=1&key=f215dcc3a02924a4bda08f8d7b271c54";
+    url<<type;
+    url<<"&skip=20&finish=1&key=9ca9f71fc3e8dd6eec0c9a0c29bd895e";
 
     log("%s", url.str().c_str());
     
@@ -67,10 +69,13 @@ void DownloadManager::downloadCartooninfo(string categoryName)
                 rapidjson::Value& result = _doc["result"];
                 rapidjson::Value& bookList = result["bookList"];
                 
+                int orignalFloder = 141;
                 for (int i = 0; i < bookList.Size(); ++i)
                 {
                     Cartoon cartoon;
                     rapidjson::Value& cartoonInfo = bookList[i];
+                    cartoon.isNew = "false";
+                    cartoon.isLock = "false";
                     cartoon.name = cartoonInfo["name"].GetString();
                     cartoon.categoryId = "4";
                     cartoon.area = cartoonInfo["area"].GetString();
@@ -82,8 +87,14 @@ void DownloadManager::downloadCartooninfo(string categoryName)
                     
                     cartoon.isfinish = "1";
                     
+                    char buf[5];
+                    sprintf(buf, "%04d", (orignalFloder+i));
+                    cartoon.folder = buf;
+                    
                     xCMInstance->getCartoonInfo().push_back(cartoon);
                 }
+                
+                xCMInstance->saveCartoonInfoToCsv();
             }
         }
         
@@ -147,8 +158,17 @@ void DownloadManager::downloadChapter(string cartoonName, string folder)
                     _vec.push_back(_list);
                 }
                 
-                string path = FileUtils::getInstance()->getWritablePath() + lRequest->getTag() + "/chapter.csv";
-                this->saveMyArtDataTofile(_vec, path);
+                
+                string path = FileUtils::getInstance()->getWritablePath() + lRequest->getTag() + "/";
+                if (!FileUtils::getInstance()->isFileExist(path))
+                {
+                    this->createDirectory(path.c_str());
+                    
+                    string path2 = FileUtils::getInstance()->getWritablePath() + lRequest->getTag() + "/chapter.csv";
+                    this->saveMyArtDataTofile(_vec, path2);
+                }
+                
+                
             }
         }
         
@@ -213,7 +233,7 @@ void DownloadManager::startDownload(Chapter chapter, string cartoonName, string 
     _needDownloadChapter.push_back(chapter);
     this->downloadPictureCsv();
 }
-int xxx = 0;
+
 void DownloadManager::downloadPictureCsv()
 {
     if (_downloadSwitch) return;
@@ -232,7 +252,7 @@ void DownloadManager::downloadPictureCsv()
     ss<<_cartoonName;
     ss<<"&id=";
     ss<<chapter.id;
-    ss<<"&key=f215dcc3a02924a4bda08f8d7b271c54";
+    ss<<"&key=9ca9f71fc3e8dd6eec0c9a0c29bd895e";
     
     HttpRequest* lRequest = new HttpRequest;
     lRequest->setUrl(ss.str().c_str());
@@ -264,14 +284,10 @@ void DownloadManager::downloadPictureCsv()
                     _list.push_back(cartoonInfo["imageUrl"].GetString());
                     
                     vecPic.push_back(_list);
-                    ++xxx;
                 }
             }
-            
-            log("%lu", _needDownloadChapter.size());
-            
+
             _needDownloadChapter.erase(_needDownloadChapter.begin());
-            log("%lu", _needDownloadChapter.size());
             
             _downloadSwitch = false;
             
@@ -310,11 +326,79 @@ void DownloadManager::downloadPictureCsv()
 
 }
 
-
-void DownloadManager::saveToCsv()
+void DownloadManager::startDownloadPicture(Picture picture, string cartoonFolder)
 {
-
+    saveFolder = cartoonFolder;
+    _needDownloadPicture.push_back(picture);
+    this->downloadPicture();
 }
+
+void DownloadManager::downloadPicture()
+{
+    if (_downloadSwitch) return;
+    
+    _downloadSwitch = true;
+    
+    Picture picture = _needDownloadPicture.at(0);
+    
+    HttpRequest* lRequest = new HttpRequest;
+    lRequest->setUrl(picture.url.c_str());
+    lRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+    lRequest->setResponseCallback([this, lRequest](network::HttpClient* client, network::HttpResponse* response){
+        
+        if (!response || !response->isSucceed())
+        {
+            log("%s",saveFolder.c_str());
+            log("reponse failed!    获取网络资源失败！");
+        }else
+        {
+            std::vector<char>* buffer = response->getResponseData();
+            std::string buffff(buffer->begin(), buffer->end());
+            
+            string path = FileUtils::getInstance()->getWritablePath() + saveFolder + "/" + lRequest->getTag();
+            if (!FileUtils::getInstance()->isFileExist(path))
+            {
+
+                FILE* fp = fopen(path.c_str(), "wb+");
+                fwrite(buffff.c_str(), 1, buffer->size(), fp);
+                fclose(fp);
+            }
+            
+            log("%lu",_needDownloadPicture.size());
+            _needDownloadPicture.erase(_needDownloadPicture.begin());
+            log("%lu",_needDownloadPicture.size());
+            _downloadSwitch = false;
+            
+            if (_needDownloadPicture.size() > 0)
+            {
+                this->downloadPicture();
+            }else
+            {
+
+                xCMInstance->_CartoonInfo.erase(xCMInstance->_CartoonInfo.begin());
+                if (xCMInstance->_CartoonInfo.size() > 0)
+                {
+                    Cartoon car = xCMInstance->_CartoonInfo.at(0);
+                    for (int x = 0; x < car._pictureInfo.size(); ++x)
+                    {
+                        xDMInstance->startDownloadPicture(car._pictureInfo.at(x), car.folder);
+                    }
+                }else
+                {
+                    log("download finish!!!");
+                }
+                
+                
+            }
+        }
+        
+        lRequest->release();
+    });
+    
+    lRequest->setTag(picture.picName.c_str());
+    HttpClient::getInstance()->send(lRequest);
+}
+
 
 bool DownloadManager::createDirectory(const char *path)
 {

@@ -21,6 +21,7 @@ class Picture
 public:
     string id;
     string url;
+    string picName;
 };
 
 class Chapter
@@ -41,8 +42,11 @@ public:
     string coverUrl;
     string isfinish;
     string folder;
+    string isNew;
+    string isLock;
     
     vector<Chapter> _chapterInfo;
+    vector<Picture> _pictureInfo;
 };
 
 class Category

@@ -50,11 +50,15 @@ vector<Cartoon>& CategoryManager::getCartoonInfo()
 
 void CategoryManager::readCartoonFromCsv()
 {
+    //download cartoon info csv;
+//    xDMInstance->downloadCartooninfo("");
+//    return;
+    
     CSVParse* lCsv = CSVParse::create("cartoon.csv");
     if (lCsv)
     {
         unsigned int row = lCsv->getRows();
-        for (int i = 65; i < row; ++i)
+        for (int i = 1; i < row; ++i)
         {
             Cartoon cartoon;
             cartoon.name = lCsv->getDatas(i, "name");
@@ -64,11 +68,12 @@ void CategoryManager::readCartoonFromCsv()
             cartoon.coverUrl = lCsv->getDatas(i, "coverUrl");
             cartoon.isfinish = lCsv->getDatas(i, "isfinsh");
             cartoon.folder = lCsv->getDatas(i, "folder");
+            cartoon.isNew = lCsv->getDatas(i, "isNew");
+            cartoon.isLock = lCsv->getDatas(i, "isLock");
             
             _CartoonInfo.push_back(cartoon);
         }
     }
-    
     
     //read chapter
     for (int i = 0; i < _CartoonInfo.size(); ++i)
@@ -90,16 +95,16 @@ void CategoryManager::readCartoonFromCsv()
         }
     }
     
+    //download chapter csv
     Cartoon _car = _CartoonInfo.at(0);
-    
     for (int x = 0; x<_car._chapterInfo.size(); ++x)
     {
         xDMInstance->startDownload(_car._chapterInfo.at(x), _car.name, _car.folder);
     }
-
+    
     return;
     
-    for (int i = 0; i < _CartoonInfo.size(); ++i)
+    for (int i = 82; i < 83; ++i)
     {
         Cartoon cartoon = _CartoonInfo.at(i);
         
@@ -110,26 +115,90 @@ void CategoryManager::readCartoonFromCsv()
         string ss = xDMInstance->UrlGB2312(gg);
         
         xDMInstance->downloadChapter(ss, cartoon.folder);
-
+        
     }
+    
+    
+    return;
+    
+    
+    
+    
+    return;
+    
+   
+    
+    
+    return;
+    
+    //read picture
+    for (int i = 0; i < _CartoonInfo.size(); ++i)
+    {
+        string path = FileUtils::getInstance()->getWritablePath() + _CartoonInfo.at(i).folder + "/picture.csv";
+        if (FileUtils::getInstance()->isFileExist(path))
+        {
+            CSVParse* lCsv = CSVParse::create(path.c_str());
+            unsigned int row = lCsv->getRows();
+            for (int j = 0; j < row; ++j)
+            {
+                Picture picture;
+                picture.id = lCsv->getData(j, 1);
+                picture.url = lCsv->getData(j, 2);
+                
+                stringstream ss;
+                ss<<"";
+                ss<<lCsv->getData(j, 0);
+                ss<<"_";
+                ss<<picture.id;
+                ss<<".jpg";
+                picture.picName = ss.str();
+                
+                _CartoonInfo.at(i)._pictureInfo.push_back(picture);
+            }
+        }
+    }
+
+    
+    
+    //download picture
+    
+    Cartoon car = _CartoonInfo.at(0);
+    for (int x = 0; x < car._pictureInfo.size(); ++x)
+    {
+        xDMInstance->startDownloadPicture(car._pictureInfo.at(x), car.folder);
+    }
+
+    return;
+    
 }
 
 void CategoryManager::saveCartoonInfoToCsv()
 {
     vector<list<string>> _vec;
     list<string> _list;
-    _list.push_back("name,cateId,area,des,coverUrl,isfinsh");
+    _list.push_back("isLock");
+    _list.push_back("isNew");
+    _list.push_back("folder");
+    _list.push_back("name");
+    _list.push_back("cateId");
+    _list.push_back("area");
+    _list.push_back("des");
+    _list.push_back("coverUrl");
+    _list.push_back("isfinsh");
     _vec.push_back(_list);
     for (int i = 0; i < _CartoonInfo.size(); ++i)
     {
         Cartoon cartoon = _CartoonInfo.at(i);
         list<string> lList;
+        lList.push_back(cartoon.isLock);
+        lList.push_back(cartoon.isNew);
+        lList.push_back(cartoon.folder);
         lList.push_back(cartoon.name);
         lList.push_back(cartoon.categoryId);
         lList.push_back(cartoon.area);
         
-        string des = "\"" + cartoon.des + "\"";
-        lList.push_back(des);
+//        string des = "\"" + cartoon.des + "\"";
+        lList.push_back(cartoon.des);
         
         lList.push_back(cartoon.coverUrl);
         lList.push_back(cartoon.isfinish);

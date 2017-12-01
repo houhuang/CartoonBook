@@ -38,6 +38,7 @@ public:
 //private:
     bool createDirectory(const char *path);
     
+    
     //download picture csv
     void downloadPictureCsv();
     void startDownload(Chapter chapter, string cartoonName, string carttonFolder);
@@ -46,9 +47,13 @@ public:
     bool _downloadSwitch;
     string saveFolder;
     string _cartoonName;
-    
-    void saveToCsv();
     vector<list<string>> vecPic;
+    
+    
+    //download picture
+    void downloadPicture();
+    void startDownloadPicture(Picture picture, string cartoonFolder);
+    vector<Picture> _needDownloadPicture;
     
     
     string StrToHex(string strData);
