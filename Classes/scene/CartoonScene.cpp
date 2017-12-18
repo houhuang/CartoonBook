@@ -18,6 +18,9 @@ bool CartoonScene::init()
     
 //    xCMInstance->readCartoonFromCsv();
     
+    Sprite* lsp = Sprite::create("res/cover.png");
+    this->addChild(lsp);
+    
     this->createTable();
     return true;
 }

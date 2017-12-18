@@ -38,13 +38,13 @@ DownloadManager::DownloadManager()
 void DownloadManager::downloadCartooninfo(string categoryName)
 {//name=&type=%E5%B0%91%E5%B9%B4%E6%BC%AB%E7%94%BB&skip=&finish=1&key=f215dcc3a02924a4bda08f8d7b271c54
     
-    string type = this->UrlGB2312("耽美漫画");
+    string type = this->UrlGB2312("青年漫画");
     
     stringstream url;
     url<<"";
     url<<"https://japi.juhe.cn/comic/book?name=&type=";
     url<<type;
-    url<<"&skip=20&finish=1&key=9ca9f71fc3e8dd6eec0c9a0c29bd895e";
+    url<<"&skip=40&finish=1&key=9ca9f71fc3e8dd6eec0c9a0c29bd895e";
 
     log("%s", url.str().c_str());
     
@@ -74,10 +74,10 @@ void DownloadManager::downloadCartooninfo(string categoryName)
                 {
                     Cartoon cartoon;
                     rapidjson::Value& cartoonInfo = bookList[i];
-                    cartoon.isNew = "false";
+                    cartoon.isNew = "true";
                     cartoon.isLock = "false";
                     cartoon.name = cartoonInfo["name"].GetString();
-                    cartoon.categoryId = "4";
+                    cartoon.categoryId = "2";
                     cartoon.area = cartoonInfo["area"].GetString();
                     cartoon.des = cartoonInfo["des"].GetString();
                     if (cartoonInfo.HasMember("coverImg"))
@@ -159,14 +159,14 @@ void DownloadManager::downloadChapter(string cartoonName, string folder)
                 }
                 
                 
-                string path = FileUtils::getInstance()->getWritablePath() + lRequest->getTag() + "/";
+                string path = FileUtils::getInstance()->getWritablePath() + "chapter/";
                 if (!FileUtils::getInstance()->isFileExist(path))
                 {
                     this->createDirectory(path.c_str());
-                    
-                    string path2 = FileUtils::getInstance()->getWritablePath() + lRequest->getTag() + "/chapter.csv";
-                    this->saveMyArtDataTofile(_vec, path2);
                 }
+                
+                string path2 = FileUtils::getInstance()->getWritablePath() + "chapter/" + lRequest->getTag() + "_chapter.csv";
+                this->saveMyArtDataTofile(_vec, path2);
                 
                 
             }
@@ -296,7 +296,13 @@ void DownloadManager::downloadPictureCsv()
                 this->downloadPictureCsv();
             }else
             {
-                string path = FileUtils::getInstance()->getWritablePath() + saveFolder + "/picture.csv";
+                string folderPath = FileUtils::getInstance()->getWritablePath() + "pictureCsv/";
+                string path = FileUtils::getInstance()->getWritablePath() + "pictureCsv/" + saveFolder + "_picture.csv";
+                if (!FileUtils::getInstance()->isFileExist(folderPath))
+                {
+                    this->createDirectory(folderPath.c_str());
+                }
+                
                 this->saveMyArtDataTofile(vecPic, path);
                 
                 vecPic.clear();

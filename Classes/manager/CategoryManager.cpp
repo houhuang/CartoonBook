@@ -50,7 +50,7 @@ vector<Cartoon>& CategoryManager::getCartoonInfo()
 
 void CategoryManager::readCartoonFromCsv()
 {
-    //download cartoon info csv;
+//    //download cartoon info csv;
 //    xDMInstance->downloadCartooninfo("");
 //    return;
     
@@ -78,7 +78,7 @@ void CategoryManager::readCartoonFromCsv()
     //read chapter
     for (int i = 0; i < _CartoonInfo.size(); ++i)
     {
-        string path = FileUtils::getInstance()->getWritablePath() + _CartoonInfo.at(i).folder + "/chapter.csv";
+        string path = FileUtils::getInstance()->getWritablePath() + "chapter/" + _CartoonInfo.at(i).folder + "_chapter.csv";
         if (FileUtils::getInstance()->isFileExist(path))
         {
             CSVParse* lCsv = CSVParse::create(path.c_str());
@@ -95,7 +95,22 @@ void CategoryManager::readCartoonFromCsv()
         }
     }
     
-    //download chapter csv
+//    //download chapter csv
+//    for (int i = 0; i < _CartoonInfo.size(); ++i)
+//    {
+//        Cartoon cartoon = _CartoonInfo.at(i);
+//        
+//        const char* gg;
+//        gg = cartoon.name.c_str();
+//        string ss = xDMInstance->UrlGB2312(gg);
+//        
+//        xDMInstance->downloadChapter(ss, cartoon.folder);
+//        
+//    }
+//    
+//    return;
+    
+    //download picture csv
     Cartoon _car = _CartoonInfo.at(0);
     for (int x = 0; x<_car._chapterInfo.size(); ++x)
     {
@@ -104,19 +119,7 @@ void CategoryManager::readCartoonFromCsv()
     
     return;
     
-    for (int i = 82; i < 83; ++i)
-    {
-        Cartoon cartoon = _CartoonInfo.at(i);
-        
-        
-        
-        const char* gg;
-        gg = cartoon.name.c_str();
-        string ss = xDMInstance->UrlGB2312(gg);
-        
-        xDMInstance->downloadChapter(ss, cartoon.folder);
-        
-    }
+    
     
     
     return;
