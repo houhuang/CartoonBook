@@ -69,6 +69,7 @@ void DownloadManager::downloadCartooninfo(string categoryName)
                 rapidjson::Value& result = _doc["result"];
                 rapidjson::Value& bookList = result["bookList"];
                 
+                ////////////////////////////
                 int orignalFloder = 141;
                 for (int i = 0; i < bookList.Size(); ++i)
                 {
